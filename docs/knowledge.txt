@@ -1,0 +1,14 @@
+Retrieval Augmented Generation (RAG) is a technique where a language model 
+retrieves relevant information from a 
+knowledge base before generating a response.
+
+A vector database stores embeddings, which are numerical representations 
+of text that allow similarity search.
+
+Embeddings convert text into vectors so that similar meanings are close together in vector space.
+
+Large Language Models (LLMs) are AI models trained on large text data to understand and 
+generate language.
+
+Agentic AI refers to systems where AI can make decisions, use tools, 
+and perform multi-step reasoning tasks.
