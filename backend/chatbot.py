@@ -1,9 +1,10 @@
 import ollama
-from rag.rag import search_docs
+from rag.rag import search_docs # type: ignore
+from tools.calculator import calculate
 
-print("RAG AI Assistant (type 'exit' to quit)\n")
+print("Agentic AI Assistant (type 'exit' to quit)\n")
 
-messages = []   # ✅ ADD THIS LINE
+messages = []
 
 while True:
     user_input = input("You: ")
@@ -11,8 +12,19 @@ while True:
     if user_input.lower() == "exit":
         break
 
-    # Get context from docs
+    # 🔥 STEP 1: Tool decision
+    if "calculate" in user_input.lower():
+        expression = user_input.lower().replace("calculate", "").strip()
+        tool_result = calculate(expression)
+
+        print("\n[TOOL USED: Calculator]")
+        print("AI:", tool_result)
+        print()
+        continue
+
+    # 🔥 STEP 2: RAG flow
     context = search_docs(user_input)
+
     print("\n[DEBUG CONTEXT]:", context)
 
     prompt = f"""
@@ -25,16 +37,16 @@ Question:
 {user_input}
 """
 
-    messages.append({"role": "user", "content": prompt})
+    messages.append({"role": "user", "content": prompt}) # type: ignore
 
     response = ollama.chat(
         model="llama3",
-        messages=messages
+        messages=messages # type: ignore
     )
 
     ai_reply = response["message"]["content"]
 
-    messages.append({"role": "assistant", "content": ai_reply})
+    messages.append({"role": "assistant", "content": ai_reply}) # type: ignore
 
     print("\nAI:", ai_reply)
     print()
